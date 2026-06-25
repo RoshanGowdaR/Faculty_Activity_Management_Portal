@@ -1,14 +1,16 @@
 const supabase = require('../config/db');
 const path = require('path');
 
+const BUCKET_NAME = process.env.SUPABASE_STORAGE_BUCKET || 'proofs';
+
 const uploadFileToSupabase = async (file) => {
   const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-  const ext = path.extname(file.originalname);
+  const ext = path.extname(file.originalname).toLowerCase();
   const basename = path.basename(file.originalname, ext).replace(/[^a-zA-Z0-9]/g, '_');
   const fileName = `${basename}-${uniqueSuffix}${ext}`;
 
   const { data, error } = await supabase.storage
-    .from('proofs')
+    .from(BUCKET_NAME)
     .upload(fileName, file.buffer, {
       contentType: file.mimetype,
       upsert: true
@@ -17,7 +19,7 @@ const uploadFileToSupabase = async (file) => {
   if (error) throw error;
 
   const { data: publicUrlData } = supabase.storage
-    .from('proofs')
+    .from(BUCKET_NAME)
     .getPublicUrl(fileName);
 
   return publicUrlData.publicUrl;
@@ -29,7 +31,7 @@ const deleteFileFromSupabase = async (url) => {
     const fileName = parts[parts.length - 1];
 
     const { error } = await supabase.storage
-      .from('proofs')
+      .from(BUCKET_NAME)
       .remove([fileName]);
     
     if (error) {
