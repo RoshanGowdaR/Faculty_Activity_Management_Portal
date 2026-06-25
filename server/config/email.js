@@ -1,7 +1,8 @@
 const nodemailer = require('nodemailer');
 
-const sendResetEmail = async (email, resetToken) => {
-  const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
+const sendResetEmail = async (email, resetToken, clientOrigin) => {
+  const base = clientOrigin ? clientOrigin.replace(/\/$/, '') : 'http://localhost:5173';
+  const resetUrl = `${base}/reset-password/${resetToken}`;
   
   let transporter;
 

@@ -234,7 +234,20 @@ exports.forgotPassword = async (req, res) => {
       user_id: user.id
     }]);
 
-    const emailResult = await sendResetEmail(email, resetToken);
+    // Determine client origin dynamically from request body, headers, or referer
+    let clientOrigin = req.body.origin || req.get('origin');
+    if (!clientOrigin && req.get('referer')) {
+      try {
+        clientOrigin = new URL(req.get('referer')).origin;
+      } catch (e) {
+        // Fallback if referer is invalid
+      }
+    }
+    if (!clientOrigin) {
+      clientOrigin = 'http://localhost:5173';
+    }
+
+    const emailResult = await sendResetEmail(email, resetToken, clientOrigin);
 
     res.json({
       message: 'If a matching account exists, a password reset link has been sent to the registered email.'
