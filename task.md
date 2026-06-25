@@ -1,0 +1,12 @@
+- `[x]` Install `@supabase/supabase-js` package on the server
+- `[x]` Update `server/.env` with the new Supabase credentials
+- `[x]` Create PostgreSQL DDL schema `server/config/schema.sql` for Supabase SQL Editor
+- `[x]` Modify `server/config/db.js` to configure and export the Supabase Client
+- `[x]` Modify `server/middleware/uploadMiddleware.js` to switch Multer to memory buffer storage
+- `[x]` Rewrite `server/controllers/authController.js` using Supabase queries
+- `[x]` Rewrite `server/controllers/submissionController.js` with Supabase database queries and Storage upload integration
+- `[x]` Rewrite `server/controllers/adminController.js` using Supabase queries (including user populating)
+- `[x]` Rewrite `server/controllers/masterController.js` using Supabase queries
+- `[x]` Update notification routes in `server/routes/api.js` for Supabase
+- `[x]` Create `vercel.json` in the workspace root for serverless node configurations
+- `[ ]` Verify database migration and routing by running local integration tests (requires Supabase SQL schema execution)
