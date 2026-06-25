@@ -1,0 +1,25 @@
+# Node dependencies
+node_modules/
+
+# Client build output
+client/dist/
+dist/
+
+# Secret environment files
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+server/.env
+
+# Editor/OS settings
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
